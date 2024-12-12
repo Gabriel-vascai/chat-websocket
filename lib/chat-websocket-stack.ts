@@ -82,6 +82,13 @@ export class ChatWebsocketStack extends cdk.Stack {
       },
     });
 
+    webSocketApi.addRoute("sendMessage", {
+      integration: new integrations.WebSocketLambdaIntegration(
+        "SendMessageIntegration",
+        sendMessageHandler
+      ),
+    });
+
     // Deploy WebSocket API
     new apigatewayv2.WebSocketStage(this, "WebSocketStage", {
       webSocketApi,
